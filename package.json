@@ -1,0 +1,14 @@
+{
+  "name": "qa-cypress-portfolio",
+  "version": "1.0.0",
+  "description": "Portafolio de pruebas automatizadas con Cypress",
+  "scripts": {
+    "test": "cypress run",
+    "cy:open": "cypress open",
+    "start": "npx http-server ./ -p 8080"
+  },
+  "devDependencies": {
+    "cypress": "^13.0.0",
+    "http-server": "^14.1.1"
+  }
+}
