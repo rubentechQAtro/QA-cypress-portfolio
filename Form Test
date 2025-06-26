@@ -1,0 +1,15 @@
+// cypress/e2e/form.cy.js
+
+describe('Formulario de contacto', () => {
+  it('Debe validar campos obligatorios', () => {
+    cy.visit('https://example.cypress.io/commands/actions')
+
+    cy.get('.action-form input[name="email"]').type('correo@example.com')
+    cy.get('.action-form input[name="password"]').type('123456')
+    cy.get('.action-form input[name="confirmPassword"]').type('123456')
+
+    cy.get('.action-form').submit()
+
+    cy.contains('Form submitted!').should('be.visible')
+  })
+})
