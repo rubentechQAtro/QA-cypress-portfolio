@@ -1,0 +1,21 @@
+{
+  "name": "cypress_curso_2025",
+  "version": "1.0.0",
+  "description": "curso_cypress_2025",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Ruben",
+    "Rojas"
+  ],
+  "author": "Ruben Rojas",
+  "license": "ISC",
+  "dependencies": {
+    "init": "^0.1.2"
+  },
+  "devDependencies": {
+    "cypress": "^14.4.1"
+  }
+}

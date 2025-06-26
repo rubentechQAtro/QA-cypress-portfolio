@@ -1,0 +1,21 @@
+Bienvenidos al curso de cypress.    
+
+1.-npm init
+
+2.-npm install cypress --save-dev 
+
+3.- node_modules\.bin\cypress open
+
+4.- npm install -g npx
+
+5.- Cypress.on('uncaught:exception', () => false):
+
+
+//describe('Test con errores ignorados', () => {
+  beforeEach(() => {
+    Cypress.on('uncaught:exception', () => false);
+
+Le dice a Cypress: "Si el navegador lanza un error que no está capturado, ignóralo y no falles el test."///
+
+
+
