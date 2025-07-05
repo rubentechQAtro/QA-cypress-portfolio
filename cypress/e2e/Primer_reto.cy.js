@@ -26,7 +26,7 @@ describe("Reto", () => {
       .should("be.visible")
       .click();
 
-    // Paso 5 (opcional): Validar que el formulario emergente está visible (personalmentre prefiero trabajar asi)
+    // Paso 5 (opcional): Validar que el formulario emergente está visible (personalmentre prefiero trabajar asi).
     cy.get('#firstName')
       .should("be.visible");
   });
