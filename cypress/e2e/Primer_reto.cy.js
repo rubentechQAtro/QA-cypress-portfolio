@@ -1,32 +1,36 @@
-/// <reference types="cypress"/>
-require('cypress-plugin-tab')
+/// <reference types="cypress" />
+require('cypress-plugin-tab');
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-  // returning false here prevents Cypress from failing the test
-  return false
-})
+  // Previene que errores JS detengan la prueba
+  return false;
+});
 
+describe("Reto", () => {
 
+  it("Primer reto", () => {
+    // Paso 1: Visitar la página
+    cy.visit("https://demoqa.com/webtables");
 
-describe("Reto", () => { 
+    // Paso 2: Validar título de la página
+    cy.title().should("include", "ToolsQA");
+    cy.wait(1500);
 
-  
-    it ("Primer reto", () => {
-        cy.visit("https://demoqa.com/webtables")
-        cy.title().should("eq","DEMOQA")
-        cy.wait(1500)
-       cy.get('#searchBox').should("be.visible").type("cierra")
+    // Paso 3: Buscar un nombre en la tabla
+    cy.get('#searchBox')
+      .should("be.visible")
+      .type("cierra");
 
-        /// agregando campo
-        cy.get('#addNewRecordButton').should("be.visible").click()
+    // Paso 4: Hacer clic en 'Add'
+    cy.get('#addNewRecordButton')
+      .should("be.visible")
+      .click();
 
+    // Paso 5 (opcional): Validar que el formulario emergente está visible (personalmentre prefiero trabajar asi)
+    cy.get('#firstName')
+      .should("be.visible");
+  });
 
-    })
+});
 
-    
-
-        
-    
-    })
-       
 
