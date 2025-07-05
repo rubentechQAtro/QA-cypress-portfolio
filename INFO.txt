@@ -17,5 +17,118 @@ Bienvenidos al curso de cypress.
 
 Le dice a Cypress: "Si el navegador lanza un error que no está capturado, ignóralo y no falles el test."///
 
+----------------------------------------------------------------------------------------------------------------
 
 
+
+
+✅ Recomendación
+Para pruebas robustas y que no fallen si el equipo cambia algo menor en el sitio, usa include:
+
+js
+Copiar
+Editar
+cy.title().should("include", "DEMOQA");
+Pero si estás haciendo una prueba estricta que no debe permitir ningún cambio en el título, entonces usa eq:
+
+js
+Copiar
+Editar
+cy.title().should("eq", "DEMOQA");
+¿Quieres que te explique lo mismo pero aplicado a cy.get().should(...) también?
+
+
+
+
+
+🔎 ¿Qué hace cy.get()?
+cy.get() se usa para seleccionar un elemento del DOM usando un selector de CSS. Luego puedes hacerle aserciones con .should() para verificar texto, clases, atributos, visibilidad, etc.
+
+🎯 Ejemplo práctico
+Supongamos que tienes este HTML en la página:
+
+html
+Copiar
+Editar
+<h1 id="titulo-principal">Bienvenido a DEMOQA</h1>
+✅ cy.get().should("have.text", "Bienvenido a DEMOQA")
+Verifica que el texto sea exactamente "Bienvenido a DEMOQA".
+
+No acepta ningún texto adicional, espacios extras ni errores de mayúsculas/minúsculas.
+
+✅ cy.get().should("include.text", "DEMOQA")
+Verifica que el texto contenga "DEMOQA".
+
+Puede ser más flexible si el texto cambia ligeramente.
+
+❗ Ojo: eq y include no se usan directamente con cy.get()
+Cuando usas cy.get(), no se compara directamente con eq o include, porque cy.get() selecciona elementos, no strings. En su lugar, debes usar métodos como:
+
+should("have.text", ...)
+
+should("include.text", ...)
+
+should("contain", ...)
+
+should("have.attr", ...)
+
+💡 Diferencias de uso resumidas
+Forma	Uso común	Sensibilidad	Ejemplo
+should("have.text", "X")	Texto exacto	Muy estricta	"Bienvenido a DEMOQA"
+should("include.text", "X")	Texto parcial	Flexible	"DEMOQA"
+should("eq", "X")	Solo si accedes a una propiedad como .invoke("text") o .invoke("attr", "href")	Estricta	.invoke("text").should("eq", "Bienvenido")
+should("contain", "X")	Similar a include.text, incluso ignora etiquetas internas	Flexible	"DEMOQA"
+
+📌 Ejemplo completo Cypress:
+js
+Copiar
+Editar
+cy.get("#titulo-principal").should("have.text", "Bienvenido a DEMOQA");
+
+cy.get("#titulo-principal").should("include.text", "DEMOQA");
+
+cy.get("#titulo-principal").invoke("text").should("eq", "Bienvenido a DEMOQA");
+
+cy.get("a").invoke("attr", "href").should("include", "demoqa.com");
+
+//Cypress, por defecto, detiene y falla el test si tu aplicación lanza un error no controlado (uncaught exception). En este caso, el error viene de tu propio código (JavaScript en tu web app), no del test.
+
+//El método .on en Cypress.on(...) es una función que registra eventos globales en Cypress, muy similar a cómo funcionan los listeners en JavaScript nativo (window.addEventListener).
+
+🔍 ¿Qué significa Cypress.on(...)?
+Cypress.on(evento, callback) escucha eventos que ocurren durante la ejecución de los tests y te permite intervenir o modificar el comportamiento por defecto de Cypress.
+
+🧠 En tu caso específico:
+js
+Copiar
+Editar
+Cypress.on('uncaught:exception', (err, runnable) => {
+  return false;
+});
+'uncaught:exception': es el nombre del evento que ocurre cuando el código de la página lanza un error de JavaScript no manejado (por ejemplo, ReferenceError, TypeError, etc.).
+
+(err, runnable): es el callback que recibe el objeto de error y el contexto del test.
+
+return false;: le dice a Cypress: "ignora este error y no falles el test".
+
+🧪 Otros ejemplos de eventos con Cypress.on
+Escuchar cuando falla una solicitud de red:
+
+js
+Copiar
+Editar
+Cypress.on('fail', (error, runnable) => {
+  console.log('Test falló con error:', error.message);
+  throw error; // si no lo relanzas, el test no fallará
+});
+Escuchar cuando una alerta es disparada:
+
+js
+Copiar
+Editar
+cy.on('window:alert', (message) => {
+  expect(message).to.equal('Alerta esperada');
+});
+
+
+it.only para correr una prueba en especifico entre muchas .

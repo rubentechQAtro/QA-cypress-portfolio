@@ -1,0 +1,42 @@
+ Aquí tienes una tabla con los métodos más comunes de Cypress y los parámetros que aceptan (y para qué sirven). Ideal si estás aprendiendo automatización.
+
+✅ Tabla: Métodos comunes de Cypress y sus parámetros
+Método	Parámetros	Descripción breve
+cy.visit(url)	url (string): dirección web	Abre una página web
+cy.get(selector)	selector (string): CSS, ID, clase, etc.	Busca un elemento en el DOM
+.type(text, options)	text (string): lo que escribes
+options (opcional): { delay: 100 }	Escribe en un input, con opciones como retraso
+.click(options)	options (opcional): { force: true }	Hace clic en un elemento
+.tab(options) (plugin)	options (opcional): { shift: true }	Mueve el foco al siguiente input (o al anterior con shift)
+.should(assertion, value)	assertion: 'contain', 'eq', 'include', etc.
+value: el valor esperado	Verifica condiciones (como aserciones)
+.wait(ms)	ms (número): milisegundos	Espera ese tiempo
+.contains(text)	text (string)	Busca un elemento que contenga texto
+.select(value)	value (string): valor de una opción	Selecciona una opción en un <select>
+.check()	—	Marca un checkbox o radio button
+.uncheck()	—	Desmarca un checkbox
+.clear()	—	Limpia un campo de texto
+.invoke(method, arg)	method (string): nombre de función
+arg (opcional): parámetro	Llama un método del DOM, ej: .invoke('text')
+.focus()	—	Da foco al campo
+.blur()	—	Quita el foco del campo
+.log(message)	message (string)	Muestra un mensaje en la consola de Cypress
+
+
+✅ Opción 2: Usar .scrollTo() con duración (más directo)
+js
+
+cy.scrollTo('bottom', { duration: 2000 }) // 2 segundos
+🟢 Es más corto y limpio, pero el movimiento no es paso a paso, solo se ve más suave por el tiempo.
+
+✅ Opción 3: Scroll hacia un elemento con duración
+js
+
+cy.get('#mi-elemento').scrollIntoView({ duration: 1500, easing: 'swing' })
+🎯 Esto es útil si quieres que el scroll apunte a un campo específico pero sin que salte de golpe.
+
+🧠 Resumen
+Método	¿Se ve humano?	Control del tiempo	Comentario
+cy.scrollTo('bottom', { duration })	🟡 Medio	✅ Sí	Fluido pero no paso a paso
+scrollIntoView({ duration })	✅ Sí	✅ Sí	Ideal para scroll a elementos
+cy.window().then(...scrollBy...)	✅ Más real	✅ Muy preciso	Simula mejor el scroll humano
